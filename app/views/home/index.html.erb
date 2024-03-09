@@ -3,6 +3,9 @@
     <%= render Chat.all %>
   </nav>
 <% end %>
+<%= content_for :title do %>
+  <%= render "title", title: nil %>
+<% end %>
 <%= content_for :messages do %>
   <div class="px-4 sm:px-6 lg:px-8">
     <%= form_with url: "/", method: :get, class: "flex justify-center items-center space-x-3" do |f| %>

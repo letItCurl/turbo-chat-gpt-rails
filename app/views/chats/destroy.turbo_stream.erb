@@ -1,1 +1,4 @@
 <%= turbo_stream.remove_all @chat %>
+<%= turbo_stream.update :title do %>
+  <%= render "home/title", title: nil %>
+<% end %>
