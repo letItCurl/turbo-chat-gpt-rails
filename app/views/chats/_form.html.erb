@@ -1,22 +1,3 @@
-<%= form_with(model: chat, class: "contents") do |form| %>
-  <% if chat.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(chat.errors.count, "error") %> prohibited this chat from being saved:</h2>
-
-      <ul>
-        <% chat.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="my-5">
-    <%= form.label :title %>
-    <%= form.text_field :title, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-
-  <div class="inline">
-    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
-  </div>
+<%= form_with(model: chat) do |form| %>
+  <%= form.text_field :title, class: "focus:ring-0 focus:text-gray-200 bg-transparent text-gray-200 block rounded-md border border-gray-200 outline-none py-1 w-full", onfocusout: 'this.form.requestSubmit()' %>
 <% end %>
