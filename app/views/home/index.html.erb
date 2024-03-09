@@ -1,7 +1,7 @@
 <%= content_for :chats do %>
-  <a href="/" class="text-gray-200 hover:underline hover:bg-gray-800 p-1 rounded-md">Chat A</a>
-  <a href="/" class="text-gray-200 hover:underline hover:bg-gray-800 p-1 rounded-md">Chat B</a>
-  <a href="/" class="text-gray-200 hover:underline hover:bg-gray-800 p-1 rounded-md">Chat C</a>
+  <nav class="flex flex-1 flex-col" id="chats">
+    <%= render Chat.all %>
+  </nav>
 <% end %>
 <%= content_for :messages do %>
   <div class="px-4 sm:px-6 lg:px-8">

@@ -21,11 +21,12 @@ class ChatsController < ApplicationController
 
   # POST /chats or /chats.json
   def create
-    @chat = Chat.new(chat_params)
+    @chat = Chat.new(title: "New chat")
 
     respond_to do |format|
       if @chat.save
-        format.html { redirect_to chat_url(@chat), notice: "Chat was successfully created." }
+        format.html { redirect_to root_path, notice: "Chat was successfully created." }
+        format.turbo_stream
         format.json { render :show, status: :created, location: @chat }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -52,7 +53,8 @@ class ChatsController < ApplicationController
     @chat.destroy!
 
     respond_to do |format|
-      format.html { redirect_to chats_url, notice: "Chat was successfully destroyed." }
+      format.html { redirect_to root_path, notice: "Chat was successfully destroyed." }
+      format.turbo_stream
       format.json { head :no_content }
     end
   end
