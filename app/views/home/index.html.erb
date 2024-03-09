@@ -1,67 +1,15 @@
-<div data-controller="slide-over" class="h-full">
-  <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
-  <div class="relative z-50 lg:hidden hidden" role="dialog" aria-modal="true" data-slide-over-target="container">
-    <div
-      class="fixed inset-0 bg-gray-900/80"
-      data-slide-over-target="backdrop"
-      data-transition-enter="transition-opacity ease-linear duration-300"
-      data-transition-enter-start="opacity-0"
-      data-transition-enter-end="opacity-100"
-      data-transition-leave="transition-opacity ease-linear duration-300"
-      data-transition-leave-start="opacity-100"
-      data-transition-leave-end="opacity-0"></div>
-    <div class="fixed inset-0 flex">
-      <div
-        class="relative mr-16 flex w-full max-w-xs flex-1"
-        data-slide-over-target="panel"
-        data-transition-enter="transition ease-in-out duration-300 transform"
-        data-transition-enter-start="-translate-x-full"
-        data-transition-enter-end="translate-x-0"
-        data-transition-leave="transition ease-in-out duration-300 transform"
-        data-transition-leave-start="translate-x-0"
-        data-transition-leave-end="-translate-x-full">
-        <div
-          class="absolute left-full top-0 flex w-16 justify-center pt-5"
-          data-slide-over-target="closeButton"
-          data-transition-enter="ease-in-out duration-300"
-          data-transition-enter-start="opacity-0"
-          data-transition-enter-end="opacity-100"
-          data-transition-leave="ease-in-out duration-300"
-          data-transition-leave-start="opacity-100"
-          data-transition-leave-end="opacity-0">
-          <button type="button" class="-m-2.5 p-2.5" data-action="slide-over#hide">
-            <span class="sr-only">Close sidebar</span>
-            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        <%= render "home/sidebar_content" %>
-      </div>
-    </div>
+<%= content_for :chats do %>
+  <a href="/" class="text-gray-200 hover:underline hover:bg-gray-800 p-1 rounded-md">Chat A</a>
+  <a href="/" class="text-gray-200 hover:underline hover:bg-gray-800 p-1 rounded-md">Chat B</a>
+  <a href="/" class="text-gray-200 hover:underline hover:bg-gray-800 p-1 rounded-md">Chat C</a>
+<% end %>
+<%= content_for :messages do %>
+  <div class="px-4 sm:px-6 lg:px-8">
+    <%= form_with url: "/", method: :get, class: "flex justify-center items-center space-x-3" do |f| %>
+      <%= f.text_field :message, placeholder: "Message ChatGPT... ", class: "rounded-xl border border-gray-400 py-3 px-2 w-full" %>
+      <%= f.button "", class: "rounded-xl border border-gray-400 py-3 px-2" do %>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-gray-200 dark:text-black"><path d="M7 11L12 6L17 11M12 18V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <% end %>
+    <% end %>
   </div>
-  <!-- Static sidebar for desktop -->
-  <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-    <%= render "home/sidebar_content" %>
-  </div>
-  <div class="lg:pl-72 h-full flex flex-col justify-between">
-    <div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
-      <button type="button" class="-m-2.5 p-2.5 text-gray-700 lg:hidden" data-action="slide-over#show">
-        <span class="sr-only">Open sidebar</span>
-        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-        </svg>
-      </button>
-    </div>
-    <main class="py-10">
-      <div class="px-4 sm:px-6 lg:px-8">
-        <%= form_with url: "/", method: :get, class: "flex justify-center items-center space-x-3" do |f| %>
-          <%= f.text_field :message, placeholder: "Message ChatGPT... ", class: "rounded-xl border border-gray-400 py-3 px-2 w-full" %>
-          <%= f.button "", class: "rounded-xl border border-gray-400 py-3 px-2" do %>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-white dark:text-black"><path d="M7 11L12 6L17 11M12 18V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-          <% end %>
-        <% end %>
-      </div>
-    </main>
-  </div>
-</div>
+<% end %>
