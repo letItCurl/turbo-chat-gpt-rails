@@ -8,9 +8,18 @@
     model = Message.new
   end
 -%>
+<% if chat.present? %>
+  <%= turbo_stream_from dom_id(chat) %>
+<% end %>
 <div class="px-4 sm:px-6 lg:px-8 text-gray-800">
   <div class="flex flex-col items-center space-y-2 mb-2">
-    <%= render chat.messages unless chat.nil? %>
+    <% if chat.nil? %>
+      <div class="rounded-lg p-4 mb-32 border-4 border-dashed flex justify-center items-center">
+        <h1 class="text-center md:text-2xl text-xl text-gray-500">Send a message to start a new conversation ⚡️</h1>
+      </div>
+    <% else %>
+      <%= render chat.messages %>
+    <% end %>
   </div>
   <%= form_with model: model, url: url, method: :post, class: "flex justify-center items-center" do |f| %>
     <% if chat.nil? %>
