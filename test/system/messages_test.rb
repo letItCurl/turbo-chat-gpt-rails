@@ -16,7 +16,7 @@ class MessagesTest < ApplicationSystemTestCase
 
     fill_in "Chat", with: @message.chat_id
     fill_in "Content", with: @message.content
-    fill_in "Message type", with: @message.message_type
+    fill_in "Message type", with: @message.role
     click_on "Create Message"
 
     assert_text "Message was successfully created"
@@ -29,7 +29,7 @@ class MessagesTest < ApplicationSystemTestCase
 
     fill_in "Chat", with: @message.chat_id
     fill_in "Content", with: @message.content
-    fill_in "Message type", with: @message.message_type
+    fill_in "Message type", with: @message.role
     click_on "Update Message"
 
     assert_text "Message was successfully updated"

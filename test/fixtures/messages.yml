@@ -3,9 +3,9 @@
 one:
   chat: one
   content: MyText
-  message_type: MyString
+  role: MyString
 
 two:
   chat: two
   content: MyText
-  message_type: MyString
+  role: MyString
