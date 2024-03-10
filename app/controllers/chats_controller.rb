@@ -35,6 +35,21 @@ class ChatsController < ApplicationController
     end
   end
 
+  def create_message
+    @chat = Chat.new(chat_params.merge(title: "New chat"))
+
+    respond_to do |format|
+      if @chat.save
+        format.html { redirect_to root_path, notice: "Chat was successfully created." }
+        format.turbo_stream
+        format.json { render :show, status: :created, location: @chat }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @chat.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # PATCH/PUT /chats/1 or /chats/1.json
   def update
     respond_to do |format|
@@ -68,6 +83,6 @@ class ChatsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def chat_params
-      params.require(:chat).permit(:title)
+      params.require(:chat).permit(:title, messages_attributes: [ :content ])
     end
 end

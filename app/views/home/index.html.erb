@@ -7,12 +7,7 @@
   <%= render "title", title: nil %>
 <% end %>
 <%= content_for :messages do %>
-  <div class="px-4 sm:px-6 lg:px-8">
-    <%= form_with url: "/", method: :get, class: "flex justify-center items-center space-x-3" do |f| %>
-      <%= f.text_field :message, placeholder: "Message ChatGPT... ", class: "rounded-xl border border-gray-400 py-3 px-2 w-full" %>
-      <%= f.button "", class: "rounded-xl border border-gray-400 py-3 px-2" do %>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-gray-200 dark:text-black"><path d="M7 11L12 6L17 11M12 18V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-      <% end %>
-    <% end %>
-  </div>
+  <%= turbo_frame_tag :messages do %>
+    <%= render "messages", chat: nil %>
+  <% end %>
 <% end %>

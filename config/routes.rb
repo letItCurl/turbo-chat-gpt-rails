@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   get 'home/index'
 
   resources :chats do
+    collection do
+      post :create_message
+    end
     member do
       resources :messages
     end
