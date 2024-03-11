@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'home/index'
 
-  resources :chats do
+  resources :chats, only: [ :edit, :create, :update, :destroy, :show ] do
     collection do
       post :create_message
     end
