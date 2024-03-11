@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       post :create_message
     end
     member do
-      resources :messages
+      resources :messages, only: [ :create ]
     end
   end
 
