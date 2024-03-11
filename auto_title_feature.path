@@ -1,0 +1,38 @@
+diff --git a/app/models/message.rb b/app/models/message.rb
+index ecc4b91..c882d3f 100644
+--- a/app/models/message.rb
++++ b/app/models/message.rb
+@@ -8,6 +8,7 @@ class Message < ApplicationRecord
+   validates :role, presence: true
+
+   after_create :create_assistant_message, if: -> { self.user? }
++  after_update :udpate_chat_title, if: -> { self.chat.messages.count == 4 }
+
+   private
+
+@@ -15,4 +16,8 @@ class Message < ApplicationRecord
+     message = self.chat.messages.create(content: "...", role: "assistant")
+     OpenAi::Chat::CreateMessageJob.perform_async({message_id: message.id}.to_json)
+   end
++
++  def udpate_chat_title
++    OpenAi::Chat::UpdateChatTitleJob.perform_async({ chat_id: self.chat_id }.to_json)
++  end
+ end
+diff --git a/app/views/home/_messages.html.erb b/app/views/home/_messages.html.erb
+index dbaab8b..4c5db90 100644
+--- a/app/views/home/_messages.html.erb
++++ b/app/views/home/_messages.html.erb
+@@ -24,10 +24,10 @@
+   <%= form_with model: model, url: url, method: :post, class: "flex justify-center items-center" do |f| %>
+     <% if chat.nil? %>
+       <%= f.fields_for :messages do |messages_form| %>
+-        <%= messages_form.text_field :content, placeholder: "Message ChatGPT... ", class: "mr-3 focus:ring-0 focus:border-gray-400 rounded-xl border border-gray-400 py-2 px-2 w-full" %>
++        <%= messages_form.text_field :content, placeholder: "Message ChatGPT... ", autocomplete: "off", class: "mr-3 focus:ring-0 focus:border-gray-400 rounded-xl border border-gray-400 py-2 px-2 w-full" %>
+       <% end %>
+     <% else %>
+-      <%= f.text_field :content, placeholder: "Message ChatGPT... ", class: "mr-3 focus:ring-0 focus:border-gray-400 rounded-xl border border-gray-400 py-2 px-2 w-full" %>
++      <%= f.text_field :content, placeholder: "Message ChatGPT... ", autocomplete: "off", class: "mr-3 focus:ring-0 focus:border-gray-400 rounded-xl border border-gray-400 py-2 px-2 w-full" %>
+     <% end %>
+     <%= f.button "", class: "rounded-xl border border-gray-400 py-2 px-2" do %>
+       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-gray-200 dark:text-black"><path d="M7 11L12 6L17 11M12 18V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>

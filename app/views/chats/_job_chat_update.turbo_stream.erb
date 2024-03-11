@@ -1,0 +1,4 @@
+<%= turbo_stream.update :title do %>
+  <%= render "home/title", title: chat.title %>
+<% end %>
+<%= turbo_stream.replace_all chat %>

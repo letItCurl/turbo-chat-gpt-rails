@@ -24,10 +24,10 @@
   <%= form_with model: model, url: url, method: :post, class: "flex justify-center items-center" do |f| %>
     <% if chat.nil? %>
       <%= f.fields_for :messages do |messages_form| %>
-        <%= messages_form.text_field :content, placeholder: "Message ChatGPT... ", class: "mr-3 focus:ring-0 focus:border-gray-400 rounded-xl border border-gray-400 py-2 px-2 w-full" %>
+        <%= messages_form.text_field :content, placeholder: "Message ChatGPT... ", autocomplete: "off", class: "mr-3 focus:ring-0 focus:border-gray-400 rounded-xl border border-gray-400 py-2 px-2 w-full" %>
       <% end %>
     <% else %>
-      <%= f.text_field :content, placeholder: "Message ChatGPT... ", class: "mr-3 focus:ring-0 focus:border-gray-400 rounded-xl border border-gray-400 py-2 px-2 w-full" %>
+      <%= f.text_field :content, placeholder: "Message ChatGPT... ", autocomplete: "off", class: "mr-3 focus:ring-0 focus:border-gray-400 rounded-xl border border-gray-400 py-2 px-2 w-full" %>
     <% end %>
     <%= f.button "", class: "rounded-xl border border-gray-400 py-2 px-2" do %>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-gray-200 dark:text-black"><path d="M7 11L12 6L17 11M12 18V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
