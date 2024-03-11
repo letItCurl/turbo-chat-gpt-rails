@@ -44,7 +44,6 @@ class OpenAi::Chat::UpdateChatTitleJob
         end
         Turbo::StreamsChannel.broadcast_render_to(
           "chat_#{@chat.id}",
-          target: "chat_#{@chat.id}",
           partial: "chats/job_chat_update",
           locals: { chat: @chat }
         )

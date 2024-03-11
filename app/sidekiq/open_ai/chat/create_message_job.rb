@@ -46,7 +46,6 @@ class OpenAi::Chat::CreateMessageJob
         end
         Turbo::StreamsChannel.broadcast_render_to(
           "chat_#{@assistant_message.chat.id}",
-          target: "message_#{@assistant_message.id}",
           partial: "messages/job_message_update",
           locals: { message: @assistant_message }
         )
