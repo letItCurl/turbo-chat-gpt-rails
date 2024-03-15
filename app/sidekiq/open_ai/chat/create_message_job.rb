@@ -19,12 +19,15 @@ class OpenAi::Chat::CreateMessageJob
       f.response :json
     end
 
+    embeddings = get_embeddings(@messages_attributes.last["content"])
+    urls_used = embeddings.map{ |el| el["url"] }.uniq.join("\n ")
+    similar_texts = embeddings.map{ |el| el["text"] }.uniq.join("\n ")
     body = {
       model: "gpt-3.5-turbo",
       messages: [
         {
           role: "system",
-          content: "You are just a helpful assistant."
+          content: "You are just a helpful assistant. You are supposed to answers question about Turbo, the new feature in rails 7. Here is some extra information: #{similar_texts}"
         },
         *@messages_attributes
       ],
@@ -36,7 +39,7 @@ class OpenAi::Chat::CreateMessageJob
         events = chunk.split("data: ").reject{ |x| x.blank? }
         begin
         if events.last.strip == "[DONE]"
-          @assistant_message.update(content: content)
+          @assistant_message.update(content: "#{content} \n\n Documentation: #{urls_used}")
         else
           events.map{ |x| JSON.parse(x) }.each do |event|
             content_from_event = event.dig("choices", 0, "delta", "content") || ""
@@ -54,5 +57,19 @@ class OpenAi::Chat::CreateMessageJob
         end
       end
     end
+  end
+
+  def get_embeddings(text)
+    body = {
+      input: text,
+      model: "text-embedding-ada-002",
+      encoding_format: "float"
+    }
+
+    request = @connection.post("/v1/embeddings", body)
+
+    embedding = request.body.dig("data")[0].dig("embedding")
+
+    ActiveRecord::Base.connection.execute("SELECT url, text, 1 - (embedding <=> '#{embedding}') AS cosine_similarity FROM embeddings;").first(3)
   end
 end
