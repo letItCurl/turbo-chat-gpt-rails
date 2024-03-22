@@ -54,8 +54,7 @@ namespace :embeddings do
         request = @open_ai_connection.post('/v1/embeddings', body)
         vector = request.body.dig("data")[0].dig("embedding")
 
-        sql = "UPDATE embeddings SET embedding = '#{vector}' WHERE id = '#{embedding.id}';"
-        ActiveRecord::Base.connection.execute(sql)
+        embedding.update(embedding: vector)
         sleep 0.5
       end
     end
