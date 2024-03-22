@@ -70,6 +70,6 @@ class OpenAi::Chat::CreateMessageJob
 
     embedding = request.body.dig("data")[0].dig("embedding")
 
-    ActiveRecord::Base.connection.execute("SELECT url, text, 1 - (embedding <=> '#{embedding}') AS cosine_similarity FROM embeddings;").first(3)
+    Embedding.all.nearest_neighbors(:embedding, embedding, distance: "cosine").first(3)
   end
 end

@@ -22,8 +22,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_052834) do
     t.datetime "updated_at", null: false
   end
 
-# Could not dump table "embeddings" because of following StandardError
-#   Unknown type 'vector(1536)' for column 'embedding'
+  create_table "embeddings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "url"
+    t.text "text"
+    t.integer "version"
+    t.vector "embedding", limit: 1536
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "chat_id", null: false
